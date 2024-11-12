@@ -20,7 +20,9 @@
         <form @submit.prevent="submitForm">
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="fullName">Profile Picture</label>
-            <input type="file" id="photo" v-on:change="personalDetails.photoProfile" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <button>
+              <input type="file" id="photo" @change="uploadImage" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </button>           
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2" for="fullName">Full Name</label>
@@ -55,7 +57,9 @@
       <div :style="{ width: rightWidth + 'px' }" class="bg-gray-200 p-8 flex justify-center items-center">
         <div class="flex bg-[#f8fafc] min-w-[16cm] min-h-[22.7cm] rounded-lg shadow-lg" :style="scaleStyle">
           <div class="bg-gray-100 w-1/3 p-4">
-            <div>{{ personalDetails.photoProfile}}</div>
+            <div class="container">
+              <img :src="base64" class="object-cover aspect-square max-w-[172px] max-h-[212px] border-white border-8" />
+            </div>
             <h1 class="text-2xl font-bold mb-2 text-center">{{ personalDetails.fullName }}</h1>
             <h2 class="text-xl font-semibold text-gray-600 mb-4 text-center">{{ personalDetails.jobTitle }}</h2>
             <p class="text-gray-800">CONTACT</p>
@@ -80,6 +84,8 @@
 export default {
   data() {
     return {
+      base64: null,
+      image: null,
       leftWidth: 400, 
       isDragging: false,
       personalDetailsVisible: true,
@@ -92,6 +98,16 @@ export default {
         about: '',
       },
     };
+  },
+  watch: {
+    image: function (newVal, oldVal) {
+      console.log(newVal);
+      if(newVal) {
+        this.createBase64Image(newVal);
+      } else {
+        this.base64 = null;
+      }
+    }
   },
   computed: {
     rightWidth() {
@@ -106,6 +122,21 @@ export default {
     // },
   },
   methods: {
+    uploadImage(evt) {
+      let f = evt.target.files[0]
+      if(f) {
+        this.createBase64Image(f);
+      } else {
+        this.base64 = null;
+      }
+    },
+    createBase64Image: function(FileObject) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        this.base64 = event.target.result;
+      }
+      reader.readAsDataURL(FileObject);
+    },
     startDragging() {
       this.isDragging = true;
       window.addEventListener('mousemove', this.onMouseMove);
@@ -133,5 +164,8 @@ export default {
 .drag-handle {
   width: 5px;
   cursor: ew-resize;
+}
+.container img {
+  object-fit: contain;
 }
 </style>
