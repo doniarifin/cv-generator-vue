@@ -155,12 +155,28 @@
             <div class="container" v-if="data.isPhotoProfile">
               <img :src="data.base64" class="object-cover aspect-square max-w-[172px] max-h-[212px] border-white border-8" alt="photo-profile"/>
             </div>
-            <h1 class="text-2xl font-bold mb-2 text-center">{{ data.personalDetails.fullName }}</h1>
-            <h2 class="text-xl font-semibold text-gray-600 mb-4 text-center">{{ data.personalDetails.jobTitle }}</h2>
-            <p class="text-gray-800">CONTACT</p>
-            <p class="text-gray-800">{{ data.personalDetails.email }}</p>
-            <p class="text-gray-800">{{ data.personalDetails.phone }}</p>
-            <p class="text-gray-800">{{ data.personalDetails.location }}</p>
+            <h1 class="text-md font-bold">{{ data.personalDetails.fullName }}</h1>
+            <h2 class="text-md font-semibold mb-4">{{ data.personalDetails.jobTitle }}</h2>
+            <div class="mb-4">
+              <p class="text-md font-bold">CONTACT</p>
+              <p class="text-gray-800">{{ data.personalDetails.email }}</p>
+              <p class="text-gray-800">{{ data.personalDetails.phone }}</p>
+              <p class="text-gray-800">{{ data.personalDetails.location }}</p>
+            </div>
+            <div v-if="data.isShowSkill" class="mb-4">
+              <p class="text-md font-bold">Skills</p>
+              <div v-for="(item, idx) in data.skillList">
+                <p>
+                  {{ item }}
+                </p>
+              </div>
+            </div>
+            <div v-if="data.isShowInterest" class="mb-4">
+              <p class="text-md font-bold">Personal Interests</p>
+              <div v-for="(item, idx) in data.interestList">
+                {{ item }}
+              </div>
+            </div>
           </div>
           <div class="p-4 w-2/3">
             <p class="text-gray-800">ABOUT ME</p>
