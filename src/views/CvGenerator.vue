@@ -5,7 +5,7 @@
       <h2 class="text-xl font-bold mb-4">CV Generator</h2>
       <h2 class="text-xl font-bold mb-4">Layout</h2>
       <h2 class="text-xl font-bold mb-4">Create Theme</h2>
-      <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="togglePersonalDetails">
+      <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openPersonalDetails">
         Personal Details
         <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
           <template v-if="data.personalDetailsVisible">
@@ -54,16 +54,101 @@
           <!-- <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button> -->
         <!-- </form> -->
       </div>
-      <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer">
-        Skills
+      <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openEducation">
+        Education
+        <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
+          <template v-if="data.isEducationVisible">
+            <mdicon name="chevron-up" width="32"/>
+          </template>
+          <template v-else>
+            <mdicon name="chevron-down" width="32"/>
+          </template>
+        </button>
       </h3>
+      <div v-if="data.isEducationVisible">
+        <div class="mb-4">
+          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Education</button>
+        </div>
+      </div>
+      <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openSkills">
+        Skills & Interests
+        <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
+          <template v-if="data.isSkillVisible">
+            <mdicon name="chevron-up" width="32"/>
+          </template>
+          <template v-else>
+            <mdicon name="chevron-down" width="32"/>
+          </template>
+        </button>
+      </h3>
+      <div v-if="data.isSkillVisible">
+        <!-- skillList -->
+        <div class="mb-4">
+          <div class="flex">
+            <label class="block text-gray-700 font-bold mb-2" for="TechnicalSkills">Technical Skills</label>
+            <div class="content-center mx-4">                
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="data.isShowSkill" class="sr-only peer">
+                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="flex">
+            <input type="text" id="TechnicalSkills" v-model="data.skills" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="content-center mx-4">
+              <button @click="addTechnicalSkill" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>  
+            </div>
+          </div>
+          <div class="flex mt-4">
+            <div v-for="(item, index) in data.skillList">
+              <div class="bg-[#3b82f6] flex gap-2 justify-between items-center text-white shadow appearance-none border rounded py-2 px-3 text-gray-700 text-center">
+                <span class="font-bold">
+                  {{ item }}
+                </span>
+                <button @click="deleteSkill(item)" class="flex item-center">
+                  <mdicon name="close" width="20"/>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+       <!-- interest -->
+        <div class="mb-4">
+          <div class="flex">
+            <label class="block text-gray-700 font-bold mb-2" for="interest">Interest</label>
+            <div class="content-center mx-4">                
+              <label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="data.isShowInterest" class="sr-only peer">
+                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="flex">
+            <input type="text" id="interest" v-model="data.interest" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div class="content-center mx-4">
+              <button @click="addInterest" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>  
+            </div>
+          </div>
+          <div class="flex mt-4">
+            <div v-for="(item, index) in data.interestList">
+              <div class="bg-[#3b82f6] flex gap-2 justify-between items-center text-white shadow appearance-none border rounded py-2 px-3 text-gray-700 text-center">
+                <span class="font-bold">
+                  {{ item }}
+                </span>
+                <button @click="deleteInterest(item)" class="flex item-center">
+                  <mdicon name="close" width="20"/>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Drag Handle -->
     <div class="drag-handle bg-gray-500" @mousedown="startDragging"></div>
 
     <div class="overflow-y-scroll bg-gray-200">
-      <!-- Bagian Kanan: Tidak Bisa di-scroll -->
       <div :style="{ width: rightWidth + 'px' }" class="bg-gray-200 p-8 flex justify-center items-center">
         <div class="flex bg-[#f8fafc] min-w-[16cm] min-h-[22.7cm] rounded-lg shadow-lg">
           <div class="bg-gray-100 w-1/3 p-4">
@@ -94,11 +179,15 @@
 import { reactive, computed, watch } from "vue";
 const data = reactive({
   isPhotoProfile: false,
+  isShowSkill: false,
+  isShowInterest: false,
   base64: null,
   image: null,
   leftWidth: 400, 
   isDragging: false,
   personalDetailsVisible: true,
+  isSkillVisible: true,
+  isEducationVisible: true,
   personalDetails: {
     photoProfile: '',
     jobTitle: '',
@@ -107,6 +196,10 @@ const data = reactive({
     phone: '',
     about: '',
   },
+  skills: '',
+  skillList: [],
+  interest: '',
+  interestList: [],
 });
 
 const rightWidth = computed({
@@ -149,8 +242,48 @@ function stopDragging() {
   window.removeEventListener('mousemove',onMouseMove);
   window.removeEventListener('mouseup', stopDragging);
 }
-function togglePersonalDetails() {
+
+function openPersonalDetails() {
   data.personalDetailsVisible = !data.personalDetailsVisible;
+}
+function openSkills() {
+  data.isSkillVisible = !data.isSkillVisible;
+}
+function openEducation() {
+  data.isEducationVisible = !data.isEducationVisible;
+}
+
+function addTechnicalSkill(params) {
+  if (!data.skillList.includes(data.skills)) {
+    data.skillList.push(data.skills);
+  };
+  data.skills = "";
+}
+
+function deleteSkill(params) {
+  let listSkill = data.skillList;
+  console.log(listSkill);
+  listSkill.forEach((item, index) => {
+    if (item === params) {
+      listSkill.splice(index, 1);
+    }
+  });
+}
+function addInterest(params) {
+  if (!data.interestList.includes(data.interest)) {
+    data.interestList.push(data.interest);
+  };
+  data.interest = "";
+}
+
+function deleteInterest(params) {
+  let listInterest = data.interestList;
+  console.log(listInterest);
+  listInterest.forEach((item, index) => {
+    if (item === params) {
+      listInterest.splice(index, 1);
+    }
+  });
 }
 
 watch(
