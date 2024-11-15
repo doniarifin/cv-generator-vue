@@ -67,7 +67,50 @@
       </h3>
       <div v-if="data.isEducationVisible">
         <div class="mb-4">
-          <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Education</button>
+          <template v-for="(list, index) in data.eduList"
+          :key="'edu' + index + '-' + data.keyEduList">
+            <div class="mb-4">
+              <div class="flex justify-between">
+                <div class="flex">
+                  <h3 class="block text-gray-700 mb-2 font-bold content-center">Education {{ index + 1 }}</h3>
+                  <button class="text-red-700 px-2 py-1 rounded-lg flex items-center mb-2" @click="delEdulist(index)">
+                    <mdicon name="trash-can" width="32"/>
+                  </button>
+                </div>
+                <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center mb-2" @click="openListEdu(index)">
+                  <template v-if="list.EduListVisible">
+                    <mdicon name="chevron-up" width="32"/>
+                  </template>
+                  <template v-else>
+                    <mdicon name="chevron-down" width="32"/>
+                  </template>
+                </button>
+              </div>
+              <div v-if="list.EduListVisible">
+                <div class="mb-4">
+                  <label class="block text-gray-700 mb-2" for="school">School</label>
+                  <input type="text" id="" v-model="list.EducationSchool" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-gray-700 mb-2" for="">Field of study</label>
+                  <input type="text" id="" v-model="list.EducationStudy" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-gray-700 mb-2" for="">Start date</label>
+                  <input type="text" id="" v-model="list.EducationStart" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-gray-700 mb-2" for="">End date</label>
+                  <input type="text" id="" v-model="list.EducationEnd" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-4">
+                  <label class="block text-gray-700 mb-2" for="">Summary</label>
+                  <input type="text" id="" v-model="list.EducationSummary" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+              </div>
+            </div>
+          </template>
+          <button @click="addEducation" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Education</button>
         </div>
       </div>
       <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openSkills">
@@ -177,6 +220,12 @@
                 {{ item }}
               </div>
             </div>
+            <div class="mb-4">
+              <p class="text-md font-bold">Education</p>
+              <div v-for="(item, idx) in data.eduList">
+                {{ item.EducationStudy }} at {{ item.EducationSchool }} ({{ item.EducationStart }} - {{ item.EducationEnd }})
+              </div>
+            </div>
           </div>
           <div class="p-4 w-2/3">
             <p class="text-gray-800">ABOUT ME</p>
@@ -193,6 +242,8 @@
 
 <script setup>
 import { reactive, computed, watch } from "vue";
+import util from "@/assets/js/util";
+
 const data = reactive({
   isPhotoProfile: false,
   isShowSkill: false,
@@ -203,7 +254,10 @@ const data = reactive({
   isDragging: false,
   personalDetailsVisible: true,
   isSkillVisible: true,
-  isEducationVisible: true,
+  isEducationVisible: [
+
+  ],
+  isEduListVisible: true,
   personalDetails: {
     photoProfile: '',
     jobTitle: '',
@@ -216,6 +270,18 @@ const data = reactive({
   skillList: [],
   interest: '',
   interestList: [],
+  structEducation: [
+    {
+      EducationSchool: "",
+      EducationStudy: "",
+      EducationStart: "",
+      EducationEnd: "",
+      EducationSummary: "",
+      EduListVisible: true,
+    },
+  ],
+  eduList: [],
+  keyEduList: 0,
 });
 
 const rightWidth = computed({
@@ -267,6 +333,20 @@ function openSkills() {
 }
 function openEducation() {
   data.isEducationVisible = !data.isEducationVisible;
+}
+
+function openListEdu(idx) {
+  data.eduList[idx].EduListVisible = !data.eduList[idx].EduListVisible;
+}
+
+function delEdulist(idx) {
+  let allData = data.eduList;
+  allData.splice(idx, 1);
+}
+
+function addEducation(params) {
+  const o = util.cloneObject(data.structEducation);
+  data.eduList.push(...o);
 }
 
 function addTechnicalSkill(params) {
