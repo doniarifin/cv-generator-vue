@@ -2,8 +2,8 @@
   <!-- form field -->
   <div class="w-full settings basis-1/4 overflow-y-auto min-w-80 bg-gray-100 p-4">
     <h2 class="text-xl font-bold mb-4">CV Generator</h2>
-    <h2 class="text-xl font-bold mb-4">Layout</h2>
-    <h2 class="text-xl font-bold mb-4">Create Theme</h2>
+    <!-- <h2 class="text-xl font-bold mb-4">Layout</h2>
+    <h2 class="text-xl font-bold mb-4">Create Theme</h2> -->
     <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openPersonalDetails">
       Personal Details
       <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
