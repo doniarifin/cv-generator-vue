@@ -185,7 +185,7 @@
         </div>
       </div>
     </div>
-    <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openSkills">
+    <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openExperience">
       Experiences
       <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
         <template v-if="data.isExpVisible">
@@ -405,6 +405,9 @@ function openPersonalDetails() {
 }
 function openSkills() {
   data.isSkillVisible = !data.isSkillVisible;
+}
+function openExperience() {
+  data.isExpVisible = !data.isExpVisible;
 }
 function openEducation() {
   data.isEducationVisible = !data.isEducationVisible;
