@@ -8,6 +8,9 @@ import CvGenerator from './views/CvGenerator.vue'
 </template>
 
 <style scoped>
+.cv-wrapper {
+  height: 100vh;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

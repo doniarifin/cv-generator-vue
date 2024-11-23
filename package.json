@@ -11,7 +11,8 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "mdi-vue": "^3.0.13",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "vue-contenteditable": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
