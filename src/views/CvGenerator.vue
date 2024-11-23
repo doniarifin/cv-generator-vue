@@ -188,7 +188,7 @@
     <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openSkills">
       Experiences
       <button class="text-gray-500 px-2 py-1 rounded-lg flex items-center">
-        <template v-if="data.isSkillVisible">
+        <template v-if="data.isExpVisible">
           <mdicon name="chevron-up" width="32"/>
         </template>
         <template v-else>
@@ -196,7 +196,7 @@
         </template>
       </button>
     </h3>
-    <div class="mb-4">
+    <div v-if="data.isExpVisible" class="mb-4">
       <template v-for="(list, index) in data.expList"
       :key="'edu' + index + '-' + data.keyExpList">
         <div class="mb-4">
@@ -306,7 +306,7 @@
       </div>
     </div>
     <div class="m-4 justify-self-center" >
-      made by love <span></span> using Vue.js + Tailwind
+      made by Dhoni <span></span> using Vue.js + Tailwind
     </div>
   </div>
 </template>
@@ -324,7 +324,8 @@ const data = reactive({
   leftWidth: 400, 
   isDragging: false,
   personalDetailsVisible: true,
-  isSkillVisible: true,
+  isSkillVisible: false,
+  isExpVisible: false,
   isEducationVisible: [],
   isEduListVisible: true,
   personalDetails: {
