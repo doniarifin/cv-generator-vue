@@ -297,7 +297,7 @@
             <p class="text-base uppercase font-bold">Experiences</p>
             <div class="mt-4" v-for="(item, idx) in data.expList">
               <p class="font-bold">{{ item.ExpTitle }}</p>
-              {{ item.ExpCompany }} ({{ convertDate(item.ExpStart) }} <span v-if="item.ExpStart !== '' && item.ExpEnd !== ''">-</span> {{ convertDate(item.ExpEnd) }})
+              {{ item.ExpCompany }} ({{ convertDate(item.ExpStart) }} <span v-if="item.ExpStart !== ''">-</span> <span v-if="item.ExpListCurrentWork">Current</span> <span v-else>{{ convertDate(item.ExpEnd) }}</span>)
               <br/>
               <pre class="summary">{{ item.ExpSummary }}</pre>
             </div>
