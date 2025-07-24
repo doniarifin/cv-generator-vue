@@ -18,37 +18,55 @@
     <div v-if="data.personalDetailsVisible">
       <!-- <form @submit.prevent="submitForm"> -->
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="fullName">Profile Picture</label>
+          <label class="block text-gray-700 mb-2" for="uploadPhoto">Profile Picture</label>
           <div class="flex">
-            <label class="upload-photo shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" for="uploader">Upload Photo</label>              
-            <input hidden type="file" accept="image/*" id="uploader" @change="uploadImage" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            <div class="content-center mx-4">                
-              <label class="inline-flex items-center cursor-pointer">
-                <input :disabled="data.base64 == null" type="checkbox" v-model="data.isPhotoProfile" class="sr-only peer">
-                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-              </label>
+            <MyUploader 
+              variant="primary"
+              width="w-full"
+              @change="uploadImage"
+            />
+            <div class="content-center mx-4"> 
+              <MyToggle 
+                v-model="data.isPhotoProfile" 
+                :disabled="base64 === null" 
+              />
             </div>
           </div>
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="fullName">Full Name</label>
-          <input type="text" id="fullName" v-model="data.personalDetails.fullName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <MyInput 
+            label="Full Name"
+            type="email"
+            v-model="data.personalDetails.fullName"
+          />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="JobTitle">Job Title</label>
-          <input type="text" id="JobTitle" v-model="data.personalDetails.jobTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <MyInput 
+            label="Job Title"
+            type="email"
+            v-model="data.personalDetails.jobTitle"
+          />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="email">Email</label>
-          <input type="email" id="email" v-model="data.personalDetails.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <MyInput 
+            label="Email"
+            type="email"
+            v-model="data.personalDetails.email"
+          />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="phone">Phone Number</label>
-          <input type="text" id="phone" v-model="data.personalDetails.phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <MyInput 
+            label="Phone Number"
+            type="phone"
+            v-model="data.personalDetails.phone"
+          />
         </div>
         <div class="mb-4">
-          <label class="block text-gray-700 font-bold mb-2" for="about">About</label>
-          <textarea id="about" v-model="data.personalDetails.about" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+          <MyInput 
+            label="About"
+            type="text"
+            v-model="data.personalDetails.about"
+          />
         </div>
         <!-- <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button> -->
       <!-- </form> -->
@@ -87,29 +105,48 @@
             </div>
             <div v-if="list.EduListVisible">
               <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="school">School</label>
-                <input type="text" id="" v-model="list.EducationSchool" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <MyInput 
+                  label="School"
+                  type="text"
+                  v-model="list.EducationSchool"
+                />
               </div>
               <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="">Field of study</label>
-                <input type="text" id="" v-model="list.EducationStudy" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <MyInput 
+                  label="Field of study"
+                  type="text"
+                  v-model="list.EducationStudy"
+                />
               </div>
               <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="">Start date</label>
-                <input type="month" id="" v-model="list.EducationStart" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <MyInput 
+                  label="Start date"
+                  type="month"
+                  v-model="list.EducationStart"
+                />
               </div>
               <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="">End date</label>
-                <input type="month" id="" v-model="list.EducationEnd" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <MyInput 
+                  label="End date"
+                  type="month"
+                  v-model="list.EducationEnd"
+                />
               </div>
               <div class="mb-4">
-                <label class="block text-gray-700 mb-2" for="">Summary</label>
-                <input type="text" id="" v-model="list.EducationSummary" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <MyInput 
+                  label="Summary"
+                  type="text"
+                  v-model="list.EducationSummary"
+                />
               </div>
             </div>
           </div>
         </template>
-        <button @click="addEducation" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Education</button>
+        
+        <MyButton 
+          label="Add Education"
+          @click="addEducation"
+        />
       </div>
     </div>
     <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openSkills">
@@ -128,18 +165,18 @@
       <div class="mb-4">
         <div class="flex">
           <label class="block text-gray-700 font-bold mb-2" for="TechnicalSkills">Technical Skills</label>
-          <!-- <div class="content-center mx-4">                
-            <label class="inline-flex items-center cursor-pointer">
-              <input type="checkbox" v-model="data.isShowSkill" class="sr-only peer">
-              <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            </label>
-          </div> -->
         </div>
-        <div class="flex">
-          <input type="text" id="TechnicalSkills" v-model="data.skills" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-          <div class="content-center mx-4">
-            <button @click="addTechnicalSkill" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>  
-          </div>
+        <div class="flex gap-2">
+          <MyInput 
+            type="text"
+            v-model="data.skills"
+          />
+          <MyButton 
+            label="Add"
+            @click="addTechnicalSkill"
+          />
+          <!-- <div>
+          </div> -->
         </div>
         <div class="flex mt-4">
           <div v-for="(item, index) in data.skillList">
@@ -158,18 +195,16 @@
       <div class="mb-4">
         <div class="flex">
           <label class="block text-gray-700 font-bold mb-2" for="interest">Interest</label>
-          <!-- <div class="content-center mx-4">                
-            <label class="inline-flex items-center cursor-pointer">
-              <input type="checkbox" v-model="data.isShowInterest" class="sr-only peer">
-              <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-            </label>
-          </div> -->
         </div>
-        <div class="flex">
-          <input type="text" id="interest" v-model="data.interest" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-          <div class="content-center mx-4">
-            <button @click="addInterest" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>  
-          </div>
+        <div class="flex gap-2">
+          <MyInput 
+            type="text"
+            v-model="data.interest"
+          />
+          <MyButton 
+            label="Add"
+            @click="addInterest"
+          />
         </div>
         <div class="flex mt-4">
           <div v-for="(item, index) in data.interestList">
@@ -218,23 +253,43 @@
           </div>
           <div v-if="list.ExpListVisible">
             <div class="mb-4">
-              <label class="block text-gray-700 mb-2" for="title">Title</label>
-              <input type="text" id="" v-model="list.ExpTitle" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <MyInput 
+                label="Title"
+                type="text"
+                v-model="list.ExpTitle"
+              />
             </div>
             <div class="mb-4">
-              <label class="block text-gray-700 mb-2" for="">Company Name</label>
-              <input type="text" id="" v-model="list.ExpCompany" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <MyInput 
+                label="Company Name"
+                type="text"
+                v-model="list.ExpCompany"
+              />
+            </div>
+            <div class="mb-4 flex gap-2">
+              <!-- <input type="checkbox" v-model="list.ExpListCurrentWork"> -->
+              <MyInput 
+                class="width-10px"
+                type="checkbox"
+                v-model="list.ExpListCurrentWork"
+              /> <span>
+                I am currently working in this role
+              </span> 
             </div>
             <div class="mb-4">
-              <input type="checkbox" v-model="list.ExpListCurrentWork"> I am currently working in this role
+              <MyInput 
+                label="Start date"
+                type="month"
+                v-model="list.ExpStart"
+              />
             </div>
             <div class="mb-4">
-              <label class="block text-gray-700 mb-2" for="">Start date</label>
-              <input type="month" id="" v-model="list.ExpStart" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-4">
-              <label class="block text-gray-700 mb-2" for="">End date</label>
-              <input :disabled="list.ExpListCurrentWork" type="month" id="" v-model="list.ExpEnd" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <MyInput 
+                label="End date"
+                type="month"
+                v-model="list.ExpEnd"
+                :disabled="list.ExpListCurrentWork"
+              />
             </div>
             <div class="mb-4">
               <label class="block text-gray-700 mb-2" for="">Summary</label>
@@ -243,9 +298,14 @@
           </div>
         </div>
       </template>
-      <button @click="addExp" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Experience</button>
+      <MyButton 
+        label="Add Experience"
+        @click="addExp"
+      />
     </div>
+    
   </div>
+
 
   <div class="bg-gray-200 font-normal text-slate-800 text-sm relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center basis-3/4">
     <div class="p-8 ">
@@ -314,6 +374,10 @@
 <script setup>
 import { reactive, computed, watch } from "vue";
 import util from "@/assets/js/util";
+import MyButton from "../components/MyButton.vue";
+import MyInput from "../components/MyInput.vue";
+import MyUploader from "../components/MyUploader.vue";
+import MyToggle from "../components/MyToggle.vue";
 
 const data = reactive({
   isPhotoProfile: false,
@@ -374,7 +438,7 @@ const rightWidth = computed({
 });
 
 function uploadImage(evt) {
-  let f = evt.target.files[0]
+  let f = evt
   if(f) {
     createBase64Image(f);
   } else {
