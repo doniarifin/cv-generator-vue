@@ -23,12 +23,14 @@
             <MyUploader 
               variant="primary"
               width="w-full"
+              class="rounded-md shadow-xl"
               @change="uploadImage"
             />
             <div class="content-center mx-4"> 
               <MyToggle 
                 v-model="data.isPhotoProfile" 
                 :disabled="base64 === null" 
+                class="rounded-md shadow-xl"
               />
             </div>
           </div>
@@ -64,7 +66,7 @@
         <div class="mb-4">
           <MyInput 
             label="About"
-            type="text"
+            type="textarea"
             v-model="data.personalDetails.about"
           />
         </div>
@@ -145,6 +147,7 @@
         
         <MyButton 
           label="Add Education"
+          class="rounded-md shadow-xl"
           @click="addEducation"
         />
       </div>
@@ -300,17 +303,25 @@
       </template>
       <MyButton 
         label="Add Experience"
+        class="rounded-md shadow-xl"
         @click="addExp"
       />
     </div>
     
+    <div class="text-center p-10">
+      <MyButton 
+        label="Download CV"
+        class="shadow-xl w-[200px]"
+        @click="downloadPdf"
+      />
+    </div>
   </div>
 
 
   <div class="bg-gray-200 font-normal text-slate-800 text-sm relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center basis-3/4">
     <div class="p-8 ">
-      <div class="bg-[#f8fafc] rounded-lg shadow-lg cv shadow-lg mt-6 bg-white relative grid grid-cols-3">
-        <div class="bg-gray-100 flex flex-col gap-4 p-6 py-7 col-span-1 bg-slate-50 py-7">
+      <div id="cv-to-convert" class="bg-[#f8fafc] rounded-lg shadow-lg cv shadow-lg mt-6 bg-white relative grid grid-cols-3">
+        <div class="bg-gray-100 flex flex-col gap-4 p-6 py-7 col-span-1 bg-slate-50 py-7 rounded">
           <div class="container" v-if="data.isPhotoProfile">
             <img :src="data.base64" class="object-cover aspect-square max-w-[172px] max-h-[212px] border-white border-8" alt="photo-profile"/>
           </div>
@@ -351,7 +362,7 @@
         <div class="pr-8 pl-5 py-8 col-span-2 flex flex-col">
           <div class="mb-4">
             <p class="text-base uppercase font-bold">About Me</p>
-            <p class="text-gray-700">{{ data.personalDetails.about }}</p>
+            <p class="summary text-sm text-justify">{{ data.personalDetails.about }}</p>
           </div>
           <div class="mb-4">
             <p class="text-base uppercase font-bold">Experiences</p>
@@ -359,20 +370,21 @@
               <p class="font-bold">{{ item.ExpTitle }}</p>
               {{ item.ExpCompany }} ({{ convertDate(item.ExpStart) }} <span v-if="item.ExpStart !== ''">-</span> <span v-if="item.ExpListCurrentWork">Current</span> <span v-else>{{ convertDate(item.ExpEnd) }}</span>)
               <br/>
-              <pre class="summary">{{ item.ExpSummary }}</pre>
+              <p class="summary text-sm text-justify">{{ item.ExpSummary }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="m-4 justify-self-center" >
-      made by Dhoni <span></span> using Vue.js + Tailwind
+      Handcrafted by Doni Arifin <span></span> using VueJS + Tailwind CSS
     </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, computed, watch } from "vue";
+import html2pdf from "html2pdf.js";
 import util from "@/assets/js/util";
 import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput.vue";
@@ -538,6 +550,23 @@ function deleteInterest(params) {
   });
 }
 
+function downloadPdf() {
+  const element = document.getElementById("cv-to-convert");
+  const fullName = data.personalDetails.fullName;
+
+  const opt = {
+    margin:       0, 
+    filename:     fullName ? 'CV - ' + fullName + '.pdf' : 'CV.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['css', 'avoid-all'] }
+  };
+
+  html2pdf().set(opt).from(element).save();
+}
+
+
 watch(
   () => data.base64 == null,
   (nv) => {
@@ -551,13 +580,17 @@ watch(
 
 <style scoped>
 .cv {
-  max-width: 21cm;
-  min-width: 21cm;
-  min-height: 29.69cm;
+  width: 21cm;
+  min-height: 29cm;
+  /* padding: 2cm; */
+  margin: auto;
+  background: white;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  font-family: Arial, sans-serif;
   word-break: break-word;
-  transform: scale(.7);
-  transform-origin: top;
+  overflow: hidden;
 }
+
 
 .upload-photo {
   background-color: #3b82f6;

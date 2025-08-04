@@ -1,7 +1,16 @@
 <template>
   <label v-if="label" class="block text-gray-700 mb-2" for="">{{ label }}</label>
   <input
+    v-if="type != 'textarea'"
     :type="type"
+    :disabled="disabled"
+    :placeholder="placeholder"
+    v-model="modelValue"
+    :class="inputClass"
+    @input="$emit('update:modelValue', modelValue)"
+  />
+  <textarea
+    v-else
     :disabled="disabled"
     :placeholder="placeholder"
     v-model="modelValue"

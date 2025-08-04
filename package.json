@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
+    "html2pdf": "^0.0.11",
+    "html2pdf.js": "^0.10.3",
     "mdi-vue": "^3.0.13",
     "vue": "^3.4.29",
     "vue-contenteditable": "^4.1.0"
