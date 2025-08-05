@@ -331,7 +331,7 @@
     class="bg-gray-200 font-normal text-slate-800 text-sm md:relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center transition-all duration-300"
     :class="isSidebarOpen ? 'ml-80' : 'ml-0'"
   >
-    <div class="p-8 scale-[0.3] md:scale-90 lg:scale-100">
+    <div class="p-8 scale-[0.3] md:scale-90">
       <div id="cv-to-convert" class="bg-[#f8fafc] rounded-lg shadow-lg cv shadow-lg mt-6 bg-white relative grid grid-cols-3">
         <div class="bg-gray-100 flex flex-col gap-4 p-6 py-7 col-span-1 bg-slate-50 py-7 rounded">
           <div class="container" v-if="data.isPhotoProfile">
