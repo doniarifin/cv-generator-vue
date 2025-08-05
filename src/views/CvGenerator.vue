@@ -1,6 +1,15 @@
 <template>
+  <button
+    class="fixed top-1/2 left-0 z-50 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded-r-lg opacity-50 hover:opacity-100 transition-opacity duration-300"
+    @click="isSidebarOpen = !isSidebarOpen"
+  >
+    <mdicon :name="isSidebarOpen ? 'chevron-left' : 'chevron-right'" width="24" />
+  </button>
   <!-- form field -->
-  <div class="w-full settings basis-1/4 overflow-y-auto min-w-80 bg-gray-100 p-4">
+  <div 
+    class="fixed top-0 left-0 mx-auto h-full w-full md:w-[32rem] bg-gray-100 p-4 overflow-y-auto z-40 transform transition-transform duration-300"
+    :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+  >
     <h2 class="text-xl font-bold mb-4">CV Generator</h2>
     <!-- <h2 class="text-xl font-bold mb-4">Layout</h2>
     <h2 class="text-xl font-bold mb-4">Create Theme</h2> -->
@@ -318,8 +327,11 @@
   </div>
 
 
-  <div class="bg-gray-200 font-normal text-slate-800 text-sm relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center basis-3/4">
-    <div class="p-8 ">
+  <div 
+    class="bg-gray-200 font-normal text-slate-800 text-sm md:relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center transition-all duration-300"
+    :class="isSidebarOpen ? 'ml-80' : 'ml-0'"
+  >
+    <div class="p-8 scale-[0.3] md:scale-90 lg:scale-100">
       <div id="cv-to-convert" class="bg-[#f8fafc] rounded-lg shadow-lg cv shadow-lg mt-6 bg-white relative grid grid-cols-3">
         <div class="bg-gray-100 flex flex-col gap-4 p-6 py-7 col-span-1 bg-slate-50 py-7 rounded">
           <div class="container" v-if="data.isPhotoProfile">
@@ -383,7 +395,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, watch } from "vue";
+import { reactive, computed, watch, ref } from "vue";
 import html2pdf from "html2pdf.js";
 import util from "@/assets/js/util";
 import MyButton from "../components/MyButton.vue";
@@ -448,6 +460,8 @@ const rightWidth = computed({
     return window.innerWidth - data.leftWidth;
   }
 });
+
+const isSidebarOpen = ref(true);
 
 function uploadImage(evt) {
   let f = evt
