@@ -1,5 +1,5 @@
 <script setup>
-import CvGenerator from './views/CvGenerator.vue'
+import CvGenerator from "./views/CvGenerator.vue";
 </script>
 
 <template>

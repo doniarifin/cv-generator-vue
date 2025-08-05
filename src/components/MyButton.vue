@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed } from "vue";
 
 const emit = defineEmits({
   click: null,
@@ -18,21 +18,21 @@ const emit = defineEmits({
 const props = defineProps({
   type: {
     type: String,
-    default: "button"
+    default: "button",
   },
   variant: {
     type: String,
-    default: "primary"
+    default: "primary",
   },
   label: {
     type: String,
-    default: "Submit"
+    default: "Submit",
   },
   width: {
     type: String,
     default: "",
-  }
-})
+  },
+});
 
 const baseClass = `
   px-5 py-2.5
@@ -43,18 +43,18 @@ const baseClass = `
   focus:outline-none
   focus:ring-2
   focus:ring-offset-2
-`
+`;
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'primary':
-      return 'bg-primary text-white hover:bg-primary/80 focus:ring-primary'
-    case 'secondary':
-      return 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400'
-    case 'danger':
-      return 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500'
+    case "primary":
+      return "bg-primary text-white hover:bg-primary/80 focus:ring-primary";
+    case "secondary":
+      return "bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400";
+    case "danger":
+      return "bg-red-500 text-white hover:bg-red-600 focus:ring-red-500";
     default:
-      return 'bg-primary text-white hover:bg-primary/80 focus:ring-primary'
+      return "bg-primary text-white hover:bg-primary/80 focus:ring-primary";
   }
-})
+});
 </script>
