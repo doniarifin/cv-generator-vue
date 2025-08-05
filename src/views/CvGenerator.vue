@@ -388,7 +388,7 @@
         </div>
       </div>
     </div>
-    <div class="m-4 justify-self-center" >
+    <div class="m-4 justify-self-center text-center">
       Handcrafted by Doni Arifin <span></span> using VueJS + Tailwind CSS
     </div>
   </div>
