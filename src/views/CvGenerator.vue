@@ -10,7 +10,7 @@
     class="fixed top-0 left-0 mx-auto h-full w-full md:w-[32rem] bg-gray-100 p-4 overflow-y-auto z-40 transform transition-transform duration-300"
     :class="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
   >
-    <h2 class="text-xl font-bold mb-4">CV Generator</h2>
+    <h2 class="text-2xl p-2 text-center font-bold mb-4">CV GENERATOR/BUILDER</h2>
     <!-- <h2 class="text-xl font-bold mb-4">Layout</h2>
     <h2 class="text-xl font-bold mb-4">Create Theme</h2> -->
     <h3 class="text-xl font-bold mb-4 flex justify-between items-center cursor-pointer" @click="openPersonalDetails">
