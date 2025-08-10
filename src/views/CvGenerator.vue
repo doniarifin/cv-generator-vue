@@ -363,101 +363,8 @@
     </div>
   </div>
 
-  <div
-    class="bg-gray-200 font-normal text-slate-800 text-sm md:relative w-full overflow-y-auto overflow-x-hidden p-6 flex flex-col items-center transition-all duration-300"
-    :class="isSidebarOpen ? 'ml-80' : 'ml-0'"
-  >
-    <div class="p-8 scale-[0.3] md:scale-90">
-      <div
-        id="cv-to-convert"
-        class="bg-[#f8fafc] rounded-lg shadow-lg cv shadow-lg mt-6 bg-white relative grid grid-cols-3"
-      >
-        <div
-          class="bg-gray-100 flex flex-col gap-4 p-6 py-7 col-span-1 bg-slate-50 py-7 rounded"
-        >
-          <div class="container" v-if="data.isPhotoProfile">
-            <img
-              :src="data.base64"
-              class="object-cover aspect-square max-w-[172px] max-h-[212px] border-white border-8"
-              alt="photo-profile"
-            />
-          </div>
-          <div>
-            <h1 class="text-primary text-xl uppercase font-bold mb-1">
-              {{ data.personalDetails.fullName }}
-            </h1>
-            <h2 class="text-base uppercase font-bold">
-              {{ data.personalDetails.jobTitle }}
-            </h2>
-          </div>
-          <div class="mb-4">
-            <h2 class="text-base uppercase font-bold">contact</h2>
-            <p class="text-gray-800">{{ data.personalDetails.email }}</p>
-            <p class="text-gray-800">{{ data.personalDetails.phone }}</p>
-            <p class="text-gray-800">{{ data.personalDetails.location }}</p>
-          </div>
-          <div class="mb-4">
-            <p class="text-base uppercase font-bold">Skills</p>
-            <div
-              v-if="data.skillList.length !== 0"
-              v-for="(item, idx) in data.skillList"
-            >
-              <p>
-                {{ item }}
-              </p>
-            </div>
-          </div>
-          <div class="mb-4">
-            <p class="text-base uppercase font-bold">Personal Interests</p>
-            <div
-              v-if="data.interestList.length !== 0"
-              v-for="(item, idx) in data.interestList"
-            >
-              {{ item }}
-            </div>
-          </div>
-          <div class="mb-4">
-            <p class="text-base uppercase font-bold">Education</p>
-            <div class="mt-4" v-for="(item, idx) in data.eduList">
-              <p class="font-bold">{{ item.EducationSchool }}</p>
-              {{ item.EducationStudy }} ({{ convertDate(item.EducationStart) }}
-              <span
-                v-if="item.EducationStart !== '' && item.EducationEnd !== ''"
-                >-</span
-              >
-              {{ convertDate(item.EducationEnd) }})
-              <br />
-              {{ item.EducationSummary }}
-            </div>
-          </div>
-        </div>
-        <div class="pr-8 pl-5 py-8 col-span-2 flex flex-col">
-          <div class="mb-4">
-            <p class="text-base uppercase font-bold">About Me</p>
-            <p class="summary text-sm text-justify">
-              {{ data.personalDetails.about }}
-            </p>
-          </div>
-          <div class="mb-4">
-            <p class="text-base uppercase font-bold">Experiences</p>
-            <div class="mt-4" v-for="(item, idx) in data.expList">
-              <p class="font-bold">{{ item.ExpTitle }}</p>
-              {{ item.ExpCompany }} ({{ convertDate(item.ExpStart) }}
-              <span v-if="item.ExpStart !== ''">-</span>
-              <span v-if="item.ExpListCurrentWork">Current</span>
-              <span v-else>{{ convertDate(item.ExpEnd) }}</span
-              >)
-              <br />
-              <p class="summary text-sm text-justify">{{ item.ExpSummary }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="m-4 justify-self-center text-center">
-      Handcrafted by Doni Arifin <span></span> using VueJS + Tailwind CSS
-    </div>
-  </div>
+  <!-- cv content -->
+  <CvContent :datas="data" :side-bar-open="isSidebarOpen" />
 </template>
 
 <script setup>
@@ -468,6 +375,7 @@ import MyButton from "../components/MyButton.vue";
 import MyInput from "../components/MyInput.vue";
 import MyUploader from "../components/MyUploader.vue";
 import MyToggle from "../components/MyToggle.vue";
+import CvContent from "./CvContent.vue";
 
 const data = reactive({
   isPhotoProfile: false,
